@@ -1,10 +1,13 @@
 import xml.etree.ElementTree as Et
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def main():
-    # tree = Et.parse('assets/SB8_2-127-22264460_7441655_7441659_7441655_7441659_29488.xml')
-    tree = Et.parse('assets/SB8_2-127-22264460_7442042_7442046_7442042_7442046_29492.xml')
-    # tree = Et.parse('assets/SB8_2-127-22264460_7439203_7439212_7439203_7439212_29465.xml')
+    # tree = Et.parse('assets/input/SB8_2-127-22264460_7441655_7441659_7441655_7441659_29488.xml')
+    tree = Et.parse('assets/input/SB8_2-127-22264460_7442042_7442046_7442042_7442046_29492.xml')
+    # tree = Et.parse('assets/input/SB8_2-127-22264460_7439203_7439212_7439203_7439212_29465.xml')
     root = tree.getroot()
 
     pre = '{SIMATIC_BATCH_V8_1_0}'
