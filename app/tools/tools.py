@@ -11,6 +11,6 @@ def timeit(method):
         te = time.time()
         tz = te-ts
         if tz >= 0.05:
-            logger.debug(f'{tz:.2f} sec, {method.__name__}')
+            logger.info(f'{tz:.2f} sec, {method.__name__}')
         return result
     return timed

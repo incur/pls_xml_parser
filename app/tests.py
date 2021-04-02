@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     # tree = Et.parse('assets/input/SB8_2-127-22264460_7441655_7441659_7441655_7441659_29488.xml')
-    tree = Et.parse('assets/input/SB8_2-127-22264460_7442042_7442046_7442042_7442046_29492.xml')
+    tree = Et.parse('assets/archive/recipes/Abfuellbeh_1/RP03_CIP_BEHAELTER/SB8_2-127-22264460_6274281_6274285_6274281_6274285_25566.xml')
     # tree = Et.parse('assets/input/SB8_2-127-22264460_7439203_7439212_7439203_7439212_29465.xml')
     root = tree.getroot()
 
@@ -23,7 +23,7 @@ def main():
     if recipe != 'RP01_ANSATZ':
         print(charge, area, product, recipe)
         print(origin)
-        if len(start) == 1 and len(start) == 1:
+        if len(start) == 1 and len(ende) == 1:
             print(start[0].attrib)
             print(ende[0].attrib)
         else:

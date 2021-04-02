@@ -3,6 +3,8 @@ import uuid
 import errno
 import pathlib
 import logging
+import zipfile
+
 
 logger = logging.getLogger(__name__)
 
@@ -35,3 +37,10 @@ def secure_file_exist(filepath):
         else:
             logger.error(f'Path dont exist: {filepath}')
             raise
+
+
+def append_to_zip(zip_path, file_path, append_path):
+    zf = zipfile.ZipFile(zip_path, mode='a', compression=zipfile.ZIP_LZMA, compresslevel=9)
+    arcname = append_path + os.path.basename(file_path)
+    zf.write(file_path, arcname)
+    zf.close()
