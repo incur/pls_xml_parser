@@ -3,7 +3,6 @@ from app.tools.tools import timeit
 from app.tools.io import path_create, append_to_zip
 from app.tools.log import logg_handlers
 import pandas as pd
-import multiprocessing
 import logging
 import os
 
