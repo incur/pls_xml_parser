@@ -3,10 +3,7 @@ from pathlib import PurePath
 from app.tools.io import path_create
 
 conf = {
-    'DB_PATH': './assets/data/db.sqlite3',
-    'APP_LOG_PATH': './assets/log/app.log',
-    'INFO_LOG_PATH': './assets/log/app_info.log',
-    'ERROR_LOG_PATH': './assets/log/app_error.log'
+    'DB_PATH': './assets/data/db.sqlite3'
 }
 
 
@@ -30,17 +27,3 @@ class AssetConfig(Config):
     @property
     def db_path(self):
         return self.get_property('DB_PATH')
-
-
-class LogConfig(Config):
-    @property
-    def app_log_path(self):
-        return self.get_property('APP_LOG_PATH')
-
-    @property
-    def info_log_path(self):
-        return self.get_property('INFO_LOG_PATH')
-
-    @property
-    def error_log_path(self):
-        return self.get_property('ERROR_LOG_PATH')

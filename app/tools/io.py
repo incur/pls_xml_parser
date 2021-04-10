@@ -2,11 +2,7 @@ import os
 import uuid
 import errno
 import pathlib
-import logging
 import zipfile
-
-
-logger = logging.getLogger(__name__)
 
 
 def secure_filename(path, filename=None, ext=None):
@@ -35,7 +31,6 @@ def secure_file_exist(filepath):
         if e.errno == errno.EEXIST:
             pass
         else:
-            logger.error(f'Path dont exist: {filepath}')
             raise
 
 

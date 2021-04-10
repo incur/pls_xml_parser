@@ -1,7 +1,4 @@
 import time
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 def timeit(method):
@@ -11,6 +8,6 @@ def timeit(method):
         te = time.time()
         tz = te-ts
         if tz >= 0.05:
-            logger.info(f'{tz:.2f} sec, {method.__name__}')
+            print(f'{tz:.2f} sec, {method.__name__}')
         return result
     return timed
