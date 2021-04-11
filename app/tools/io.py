@@ -34,8 +34,29 @@ def secure_file_exist(filepath):
             raise
 
 
+def file_walker(path):
+    file_list = []
+    if os.path.isdir(path):
+        for path, dirs, files in os.walk(path):
+            for file in files:
+                ext = file.lower().rpartition('.')[-1]
+                if ext in 'xml' and file.startswith('SB8'):
+                    filename = os.path.join(path, file)
+                    file_list.append(filename)
+                else:
+                    src = os.path.join(path, file)
+                    dst = os.path.join(directory['crap'], file)
+                    os.replace(src, dst)
+    return file_list
+    
+
 def append_to_zip(zip_path, file_path, append_path):
     zf = zipfile.ZipFile(zip_path, mode='a', compression=zipfile.ZIP_LZMA, compresslevel=9)
     arcname = append_path + os.path.basename(file_path)
     zf.write(file_path, arcname)
     zf.close()
+
+
+def clean_startup(dir_dict):
+    for item in dir_dict:
+        path_create(dir_dict[item], is_file=False)

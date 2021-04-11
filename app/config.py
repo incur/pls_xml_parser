@@ -7,12 +7,6 @@ conf = {
 }
 
 
-def clean_startup():
-    for item in conf:
-        if item.endswith('PATH'):
-            path_create(conf[item], is_file=True)
-
-
 class Config(object):
     def __init__(self):
         self._config = conf
