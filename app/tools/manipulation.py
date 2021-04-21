@@ -27,16 +27,9 @@ def check_lines(file):
     ende = filter_string(lines[0], "actend='", "' startmodetype")
     area = filter_string(lines[1], "area='", "' />")
 
-<< << << < HEAD
+    anlage = area + '_#_' + product
 
-anlage = area + '_#_' + product
-
-return [charge, anlage, area, product, recipe, start, ende]
-== == == =
-
-return [charge, area, product, recipe, start, ende]
->> >> >> > 83
-d59c853e43ff740a5578ddd361c0c882e86d3f
+    return [charge, anlage, area, product, recipe, start, ende]
 
 
 def search_lines(file, substrings):
