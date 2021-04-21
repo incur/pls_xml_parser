@@ -1,8 +1,9 @@
 import re
 
+
 class fragile(object):
     class Break(Exception):
-      """Break out of the with statement"""
+        """Break out of the with statement"""
 
     def __init__(self, value):
         self.value = value
@@ -25,8 +26,10 @@ def check_lines(file):
     start = filter_string(lines[0], "actstart='", "' actend=")
     ende = filter_string(lines[0], "actend='", "' startmodetype")
     area = filter_string(lines[1], "area='", "' />")
-    
-    return [charge, area, product, recipe, start, ende]
+
+    anlage = area + '_#_' + product
+
+    return [charge, anlage, area, product, recipe, start, ende]
 
 
 def search_lines(file, substrings):
