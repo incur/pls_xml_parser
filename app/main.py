@@ -6,8 +6,8 @@ from app.tools.tools import timeit
 from app.tools.manipulation import check_lines, check_file_charge
 from app.tools.io import path_create, append_to_zip, clean_startup, file_walker
 
-archive_option = 'pass'  # do_nothing | copy | zip
-do_not_delete = True    # Don't delete from Source Input when True
+archive_option = 'copy'  # do_nothing | copy | zip
+do_not_delete = False    # Don't delete from Source Input when True
 
 directory = {
     'input': 'assets/input/',

@@ -148,3 +148,5 @@ cython_debug/
 # Editor Settings
 .vscode/
 
+/assets/output/
+/assets/input/
