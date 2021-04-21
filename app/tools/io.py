@@ -34,7 +34,7 @@ def secure_file_exist(filepath):
             raise
 
 
-def file_walker(path):
+def file_walker(path, directory, do_not_delete):
     file_list = []
     if os.path.isdir(path):
         for path, dirs, files in os.walk(path):
@@ -44,11 +44,12 @@ def file_walker(path):
                     filename = os.path.join(path, file)
                     file_list.append(filename)
                 else:
-                    src = os.path.join(path, file)
-                    dst = os.path.join(directory['crap'], file)
-                    os.replace(src, dst)
+                    if not do_not_delete:
+                        src = os.path.join(path, file)
+                        dst = os.path.join(directory['crap'], file)
+                        os.replace(src, dst)
     return file_list
-    
+
 
 def append_to_zip(zip_path, file_path, append_path):
     zf = zipfile.ZipFile(zip_path, mode='a', compression=zipfile.ZIP_LZMA, compresslevel=9)
