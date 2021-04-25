@@ -10,6 +10,7 @@ df = pd.read_csv('assets/output/raw.csv')
 df['start'] = pd.to_datetime(df['start'])
 df['ende'] = pd.to_datetime(df['ende'])
 
+
 def get_options(list_machine):
     list_machine = np.sort(list_machine)
     dict_list = []
