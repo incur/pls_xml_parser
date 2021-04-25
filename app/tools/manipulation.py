@@ -27,7 +27,7 @@ def check_lines(file):
     ende = filter_string(lines[0], "actend='", "' startmodetype")
     area = filter_string(lines[1], "area='", "' />")
 
-    anlage = area + '_#_' + product
+    anlage = area + '_#_' + product + '_#_' + recipe
 
     return [charge, anlage, area, product, recipe, start, ende]
 
@@ -49,10 +49,14 @@ def filter_string(s, start, end):
 
 
 def check_file_charge(filename, df):
-    splitted_filename = filename.split('_')
-    file_charge = splitted_filename[2] + '_' + splitted_filename[3]
+    if filename.startswith('SB8'):
+        splitted_filename = filename.split('_')
+        file_charge = splitted_filename[2] + '_' + splitted_filename[3]
 
-    if file_charge in df['charge'].unique():
-        return True
+        if file_charge in df['charge'].unique():
+            return True
+        else:
+            return False
+
     else:
         return False

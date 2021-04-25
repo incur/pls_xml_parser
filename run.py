@@ -1,10 +1,18 @@
-# This is a sample Python script.
-from app.main import main
+import sys
+from app import main, test
 
 
 def run():
-    main()
+    main.main()
+
+
+def run_test():
+    test.main()
 
 
 if __name__ == '__main__':
-    run()
+    arg = sys.argv
+    if str(arg[1]) == 'test':
+        run_test()
+    else:
+        run()
