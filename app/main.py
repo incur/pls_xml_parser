@@ -5,9 +5,10 @@ from shutil import copy2
 from app.tools.tools import timeit
 from app.tools.manipulation import check_lines, check_file_charge
 from app.tools.io import path_create, append_to_zip, clean_startup
+from app.tools.plots import machine_plots
 
 archive_option = 'copy'  # do_nothing | copy | zip
-do_not_delete = True    # Don't delete from Source Input when True
+do_not_delete = False    # Don't delete from Source Input when True
 
 directory = {
     'input': 'assets/input/',
@@ -17,7 +18,8 @@ directory = {
     'crap': 'assets/archive/crap/',
     'ansatz': 'assets/archive/RP01_Ansatz/',
     'recipe': 'assets/archive/recipes/',
-    'error': 'assets/archive/error'
+    'error': 'assets/archive/error',
+    'plots': 'assets/html/plots/'
 }
 
 files_dict = {
@@ -32,7 +34,8 @@ def main():
     f_list = file_walker(directory)
     c_list = construct(directory, f_list, df)
     data = make_data(c_list)
-    dataframe_save(files_dict, df, data)
+    final_df = dataframe_save(files_dict, df, data)
+    machine_plots(final_df, plot_path=directory['plots'])
     file_handling(directory, c_list)
 
 
@@ -62,8 +65,10 @@ def dataframe_save(f_dict, df, new_data):
     if isinstance(df, pd.DataFrame):
         bigdata = df.append(df_new, ignore_index=True)
         bigdata.to_csv(f_dict['csv'], encoding='utf-8', index=False)
+        return bigdata
     else:
         df_new.to_csv(files_dict['csv'], encoding='utf-8', index=False)
+        return df_new
 
 
 def file_handling(dirs, c_list):
