@@ -1,8 +1,6 @@
 # Project Settings
 assets/archive/recipes/*
 input/*
-input2/*
-input3/*
 *.ipynb
 
 # Byte-compiled / optimized / DLL files
