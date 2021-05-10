@@ -126,6 +126,7 @@ def construct(dirs, f_list, df):
             else:
                 f['mode'] = 'crap'
                 f['dst'] = os.path.join(dirs['crap'], f['name'])
+                f['arcname'] = 'crap/'
                 f['summary'] = None
     return f_list
 

@@ -130,7 +130,7 @@ def make_data(mf, idx=1):
     y_grubb = df_avg['diffm']
 
     # Smooth
-    grubb_filter = df_avg.set_index('start').diffm.rolling(window=remap(2)).mean()
+    grubb_filter = df_avg.set_index('start').diffm.rolling(window=14, center=True).mean()
     y_avg = grubb_filter.values
     x_avg = grubb_filter.index
 
