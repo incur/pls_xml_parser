@@ -8,27 +8,30 @@ from app.tools.io import path_create, append_to_zip, clean_startup
 from app.tools.plots import machine_plots
 
 archive_option = 'copy'  # do_nothing | copy | zip
-do_not_delete = False    # Don't delete from Source Input when True
+do_not_delete = True    # Don't delete from Source Input when True
 
 directory = {
-    'input': 'assets/input/',
+    'input': 'E:/PLSA2MES/',
     # 'input': 'D:\PLSA',
-    'output': 'assets/output/',
-    'zip': 'assets/archive/',
-    'crap': 'assets/archive/crap/',
-    'ansatz': 'assets/archive/RP01_Ansatz/',
-    'recipe': 'assets/archive/recipes/',
-    'error': 'assets/archive/error',
-    'plots': 'assets/html/plots/'
+    # E:\assets
+    'output': 'E:/assets/output/',
+    'zip': 'E:/assets/archive/',
+    'crap': 'E:/assets/archive/crap/',
+    'ansatz': 'E:/assets/archive/RP01_Ansatz/',
+    'recipe': 'E:/assets/archive/recipes/',
+    'error': 'E:/assets/archive/error',
+    'plots': 'E:/assets/html/plots/'
 }
 
 files_dict = {
-    'csv': 'assets/output/raw.csv'
+    'csv': 'E:/assets/output/raw.csv'
 }
 
 
 @timeit
 def main():
+    pd.set_option('display.max_columns', None)
+
     clean_startup(directory)
     df = dataframe_load(files_dict)
     f_list = file_walker(directory)
@@ -50,6 +53,7 @@ def make_data(c_list):
 def dataframe_load(f_dict):
     if os.path.isfile(f_dict['csv']):
         df_actual = pd.read_csv(f_dict['csv'])
+        print(df_actual.info())
         return df_actual
     else:
         return None
@@ -105,23 +109,29 @@ def construct(dirs, f_list, df):
             # is not in df
             if f['name'].startswith('SB8'):
                 summary = check_lines(f['src'])
-                charge, anlage, area, product, recipe, start, ende = summary
-                if recipe != 'RP01_ANSATZ':
-                    if start and ende:
-                        arcname = area + '/' + product + '/' + recipe + '/'
-                        f['mode'] = 'recipe'
-                        f['dst'] = os.path.join(dirs['recipe'] + arcname, f['name'])
-                        f['arcname'] = 'recipes/' + arcname
-                        f['summary'] = summary
+                if summary:
+                    charge, anlage, area, product, recipe, start, ende = summary
+                    if recipe != 'RP01_ANSATZ':
+                        if start and ende:
+                            arcname = area + '/' + product + '/' + recipe + '/'
+                            f['mode'] = 'recipe'
+                            f['dst'] = os.path.join(dirs['recipe'] + arcname, f['name'])
+                            f['arcname'] = 'recipes/' + arcname
+                            f['summary'] = summary
+                        else:
+                            f['mode'] = 'error'
+                            f['dst'] = os.path.join(dirs['error'], f['name'])
+                            f['arcname'] = 'error/'
+                            f['summary'] = None
                     else:
-                        f['mode'] = 'error'
-                        f['dst'] = os.path.join(dirs['error'], f['name'])
-                        f['arcname'] = 'error/'
+                        f['mode'] = 'ansatz'
+                        f['dst'] = os.path.join(dirs['ansatz'], f['name'])
+                        f['arcname'] = 'RP01_Ansatz/'
                         f['summary'] = None
                 else:
-                    f['mode'] = 'ansatz'
-                    f['dst'] = os.path.join(dirs['ansatz'], f['name'])
-                    f['arcname'] = 'RP01_Ansatz/'
+                    f['mode'] = 'error'
+                    f['dst'] = os.path.join(dirs['error'], f['name'])
+                    f['arcname'] = 'error/'
                     f['summary'] = None
             else:
                 f['mode'] = 'crap'

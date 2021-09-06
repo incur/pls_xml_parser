@@ -19,17 +19,21 @@ class fragile(object):
 
 
 def check_lines(file):
-    lines = search_lines(file, ['<Cr id', 'Rezeptoperation läuft'])
-    charge = filter_string(lines[0], "name='", "' hdl=")
-    product = filter_string(lines[0], "productname='", "' productcode=")
-    recipe = filter_string(lines[0], "recipeprocedurename='", "' recipeprocedureversion=")
-    start = filter_string(lines[0], "actstart='", "' actend=")
-    ende = filter_string(lines[0], "actend='", "' startmodetype")
-    area = filter_string(lines[1], "area='", "' />")
+    try:
+        lines = search_lines(file, ['<Cr id', 'Rezeptoperation läuft'])
+        charge = filter_string(lines[0], "name='", "' hdl=")
+        product = filter_string(lines[0], "productname='", "' productcode=")
+        recipe = filter_string(lines[0], "recipeprocedurename='", "' recipeprocedureversion=")
+        start = filter_string(lines[0], "actstart='", "' actend=")
+        ende = filter_string(lines[0], "actend='", "' startmodetype")
+        area = filter_string(lines[1], "area='", "' />")
 
-    anlage = area + '_#_' + product + '_#_' + recipe
+        anlage = area + '_#_' + product + '_#_' + recipe
 
-    return [charge, anlage, area, product, recipe, start, ende]
+        return [charge, anlage, area, product, recipe, start, ende]
+    except TypeError:
+        print(file)
+        return None
 
 
 def search_lines(file, substrings):

@@ -1,16 +1,28 @@
 import numpy as np
 import pandas as pd
+import os
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from outliers import smirnov_grubbs as grubbs
 import plotly.io as pio
 
 
+def main():
+    pd.set_option('display.max_columns', None)
+
+    if os.path.isfile('E:/assets/output/raw.csv'):
+        df = pd.read_csv('E:/assets/output/raw.csv')
+        df['start'] = pd.to_datetime(df['start'])
+        df['ende'] = pd.to_datetime(df['ende'])
+        df = df.sort_values(by='start', ascending=True)
+        machine_plots(df, plot_path='E:/assets/html/plots/')
+
+
 def machine_plots(df, plot_path):
     config = [
-        {'name': 'Lösebehälter', 'idx1': '10', 'idx2': '11', 'label1': 'Lösebhälter CIP',
+        {'name': 'Lösebehälter', 'idx1': '11', 'idx2': '12', 'label1': 'Lösebhälter CIP',
          'label2': 'Lösebehälter SIP', 'file': 'löse.html'},
-        {'name': 'Partikelfiltration', 'idx1': '12', 'idx2': '13', 'label1': 'Partikelfiltration CIP',
+        {'name': 'Partikelfiltration', 'idx1': '13', 'idx2': '14', 'label1': 'Partikelfiltration CIP',
          'label2': 'Partikelfiltration SIP', 'file': 'partikel.html'},
         {'name': 'Ansatz Transfer', 'idx1': '4', 'idx2': '5', 'label1': 'Transfer CIP',
          'label2': 'Transfer SIP', 'file': 'trans.html'},
@@ -22,7 +34,7 @@ def machine_plots(df, plot_path):
          'label2': 'Keimfiltration 2 CIP', 'file': 'keimCip.html'},
         {'name': 'Keimfiltration SIP', 'idx1': '7', 'idx2': '9', 'label1': 'Keimfiltration 1 SIP',
          'label2': 'Keimfiltration 2 SIP', 'file': 'keimSip.html'},
-        {'name': 'Abfüllknoten', 'idx1': '15', 'idx2': '16', 'label1': 'VK CIP',
+        {'name': 'Abfüllknoten', 'idx1': '16', 'idx2': '17', 'label1': 'VK CIP',
          'label2': 'VK SIP', 'file': 'vk.html'}
     ]
 
@@ -170,3 +182,7 @@ def remap(value, in_min=0, in_max=5, out_min=0, out_max=50):
     result = out_min + (value_scaled * out_span)
 
     return int(result)
+
+
+if __name__ == '__main__':
+    main()
